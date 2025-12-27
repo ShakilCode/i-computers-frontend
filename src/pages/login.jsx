@@ -4,17 +4,17 @@ export default function LoginPage(){
     return(
         <div className="w-full h-full bg-[url('login-bg.png')] bg-cover bg-center bg-no-repeat flex">
 
-            <div className="w-[50%] h-full flex justify-center items-center flex-col">
+            <div className="pb-60 w-[50%] h-full flex justify-center items-center flex-col">
 
-                <div className="backdrop-blur-3xl w-[400px] h-[400px] shadow-accent shadow-md rounded-full flex flex-col justify-center items-center">
-                    <img src="/logo.png" className="w-[300px]"/>
+                <div className="border-4 border-secondary ml-125 mt-25 ml-8 bg-ac pb-1 backdrop-blur-md  w-[250px] h-[250px] shadow-accent rounded-full shadow-2xl flex flex-col justify-center items-center">
+                    <img src="/logo.png" className="w-[200px]"/>
                 </div>
 
             </div>
 
             <div className="w-[50%] h-full flex justify-center items-center">
 
-                <div className="backdrop-blur-md w-[450px] h-[600px] shadow-2xl rounded-lg flex flex-col justify-center">
+                <div className="backdrop-blur-xl w-[450px] h-[600px] shadow-2xl rounded-lg flex flex-col justify-center">
                     <input
 						type="email"
 						placeholder="Email"
