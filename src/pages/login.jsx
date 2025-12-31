@@ -1,6 +1,34 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios'
+import toast from "react-hot-toast";
 
 export default function LoginPage(){
+	const [email, setEmail] = useState("")
+	const [password, setPassword] = useState("")
+	const navigate = useNavigate()
+
+	async function login(){
+		try{
+			const response = await axios.post(import.meta.env.VITE_API_URL + "/users/login",
+				{
+					email : email,
+					password : password
+				}
+			)
+			console.log(response)
+			if(response.data.role == "admin"){
+				navigate("/admin/")
+			}else{
+				// redirect to the home page
+			}
+			toast.success("Login Successful")
+		}catch(error){
+			console.log(error)
+			toast.error("Login Failed")
+		}
+	}
+
     return(
         <div className="w-full h-full bg-[url('login-bg.png')] bg-cover bg-center bg-no-repeat flex">
 
@@ -18,11 +46,21 @@ export default function LoginPage(){
                     <input
 						type="email"
 						placeholder="Email"
+						onChange={
+							(e)=>{
+								setEmail(e.target.value)
+							}
+						}
 						className="m-5 p-3 w-[90%] h-[50px] rounded-lg border border-secondary outline-none"
 					/>
                     <input
 						type="password"
 						placeholder="Password"
+						onChange={
+							(e)=>{
+								setPassword(e.target.value)
+							}
+						}
 						className="m-5 p-3 w-[90%] h-[50px] rounded-lg border border-secondary outline-none"
 					/>
 					<p className="w-full text-right pr-6 ">
@@ -31,7 +69,7 @@ export default function LoginPage(){
 							Reset
 						</Link>
 					</p>
-					<button className="m-5 p-3 w-[90%] h-[50px] bg-accent rounded-lg text-white font-bold">
+					<button onClick={login} className="m-5 p-3 w-[90%] h-[50px] bg-accent rounded-lg text-white font-bold">
 						Login
 					</button>
 					<button className="m-5 p-3 w-[90%] h-[50px] border border-accent rounded-lg text-white font-bold">
