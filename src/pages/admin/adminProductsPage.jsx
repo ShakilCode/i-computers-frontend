@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import getFormattedPrice from "../../utils/price-format";
+import axios from "axios";
 
 
 const sampleProducts = [
@@ -83,6 +84,20 @@ const sampleProducts = [
 
 export default function AdminProductsPage() {
 	const [products, setProducts] = useState(sampleProducts);
+	useEffect(()=>{
+		
+	const token = localStorage.getItem("token")
+
+	axios.get(import.meta.env.VITE_API_URL + "/products", {
+		headers: {
+			Authorization: "Bearer "+token
+		}
+	}).then(
+		(response)=>{
+			setProducts(response.data)
+		}
+	)
+	}, [])
 
 	return (
 		<div className="w-full h-full overflow-y-scroll ">
@@ -107,7 +122,7 @@ export default function AdminProductsPage() {
 			<table className="min-w-[1100px] w-full text-sm relative">
 				<thead className="sticky top-0 z-10 bg-white">
 					<tr className="border-b border-secondary/10">
-						<th className="px-5 py-3 border text-left text-xs font-semibold uppercase tracking-wide text-secondary/70">
+						<th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-secondary/70">
 							Product ID
 						</th>
 						<th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-tight text-secondary/70">
