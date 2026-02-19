@@ -13,23 +13,23 @@ export default function ProductCard(props) {
     return (
         <Link 
             to={"/overview/" + product.productId} 
-            className="group block w-[320px] h-[420px] m-4 rounded-3xl bg-white overflow-hidden relative shadow-xl hover:shadow-2xl transition-shadow duration-500"
+            className="group block w-[320px] h-[440px] m-4 rounded-3xl bg-white overflow-hidden relative shadow-xl hover:shadow-2xl transition-shadow duration-500"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
             {/* Main Container */}
             <div className="relative w-full h-full">
                 
-                {/* Animated Circle Background - Top Right Corner */}
+                {/* Animated Circle Background */}
                 <div 
-                    className={`absolute -right-24 -top-24 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 transition-all duration-700 ease-in-out z-10 ${
+                    className={`absolute -right-24 -top-24 rounded-full bg-gradient-to-br from-secondary via-accent to-secondary transition-all duration-700 ease-in-out z-10 ${
                         isHovered 
                             ? 'w-[280px] h-[280px] scale-100 opacity-100' 
                             : 'w-[120px] h-[120px] scale-90 opacity-80'
                     }`}
                 />
 
-                {/* Quarter Circle Border Decoration */}
+                {/* Quarter Circle Border */}
                 <div 
                     className={`absolute -right-16 -top-16 w-32 h-32 border-4 border-white/40 rounded-full transition-all duration-500 z-20 ${
                         isHovered ? 'scale-[2.5] opacity-0' : 'scale-100 opacity-100'
@@ -39,7 +39,7 @@ export default function ProductCard(props) {
                 {/* Images Container */}
                 <div className="relative w-full h-[260px] overflow-visible">
                     
-                    {/* First Image - Default State (only show if there's a second image OR if not hovered) */}
+                    {/* First Image */}
                     <div 
                         className={`absolute top-0 left-0 w-full h-full transition-all duration-700 ease-in-out ${
                             isHovered 
@@ -56,17 +56,15 @@ export default function ProductCard(props) {
                         </div>
                     </div>
 
-                    {/* Second Image (or First Image if no second) - Morphs into Circle on Hover */}
+                    {/* Circle Image */}
                     <div 
                         className={`absolute transition-all duration-700 ease-in-out overflow-hidden ${
                             isHovered 
                                 ? 'top-4 right-4 w-[240px] h-[240px] rounded-full opacity-100 scale-100 rotate-0 z-30 shadow-2xl' 
-                                : 'top-0 left-0 w-full h-full rounded-2xl opacity-0 scale-90 -rotate-6 z-0'
+                                : 'top-0 left-0 w-full h-full rounded-2xl opacity-0 scale-95 -rotate-3 z-0'
                         }`}
                     >
-                        <div className={`w-full h-full transition-all duration-700 ${
-                            isHovered ? 'p-3' : 'p-4'
-                        }`}>
+                        <div className="w-full h-full p-3">
                             <img 
                                 src={circleImage} 
                                 alt={product.name} 
@@ -75,17 +73,10 @@ export default function ProductCard(props) {
                                 }`}
                             />
                         </div>
-                        
-                        {/* Glowing Border Effect */}
+
+                        {/* Glow */}
                         <div 
                             className={`absolute inset-0 rounded-full border-4 border-white transition-opacity duration-500 ${
-                                isHovered ? 'opacity-100' : 'opacity-0'
-                            }`}
-                        />
-                        
-                        {/* Shine Effect */}
-                        <div 
-                            className={`absolute inset-0 rounded-full bg-gradient-to-tr from-white/0 via-white/30 to-white/0 transition-opacity duration-500 ${
                                 isHovered ? 'opacity-100' : 'opacity-0'
                             }`}
                         />
@@ -93,66 +84,66 @@ export default function ProductCard(props) {
                 </div>
 
                 {/* Content Section */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white to-transparent pt-8 pb-6 px-6">
+                {/* FIX: removed overflow-hidden from text parents */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white to-transparent pt-10 pb-6 px-6 min-h-[170px] flex flex-col justify-end">
                     
-                    {/* Product ID */}
-                    <div className="overflow-hidden mb-1">
-                        <span 
-                            className={`inline-block text-xs font-medium text-gray-400 uppercase tracking-wider transition-all duration-500 ${
-                                isHovered ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-60'
-                            }`}
-                            style={{ transitionDelay: '100ms' }}
-                        >
-                            {product.productId}
-                        </span>
-                    </div>
+                    {/* Product ID FIXED */}
+                    <span 
+                        className={`text-xs font-medium text-gray-400 uppercase tracking-wider transition-all duration-500 leading-relaxed whitespace-nowrap ${
+                            isHovered ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-80'
+                        }`}
+                        style={{ transitionDelay: '100ms' }}
+                    >
+                        {product.productId}
+                    </span>
                     
-                    {/* Product Name */}
-                    <div className="overflow-hidden mb-2">
-                        <h1 
-                            className={`inline-block font-bold text-xl text-gray-800 transition-all duration-500 ${
-                                isHovered ? 'translate-y-0 opacity-100 text-purple-600' : 'translate-y-1 opacity-90'
-                            }`}
-                            style={{ transitionDelay: '150ms' }}
-                        >
-                            {product.name}
-                        </h1>
-                    </div>
+                    {/* Product Name FIXED */}
+                    <h1 
+                        className={`font-bold text-xl text-gray-800 transition-all duration-500 leading-snug whitespace-nowrap overflow-hidden text-ellipsis ${
+                            isHovered ? 'translate-y-0 opacity-100 text-secondary' : 'translate-y-1 opacity-95'
+                        }`}
+                        style={{ transitionDelay: '150ms' }}
+                    >
+                        {product.name}
+                    </h1>
                     
-                    {/* Price Section */}
-                    <div className="flex items-center gap-3 mt-2">
+                    {/* Price Section FIXED */}
+                    <div className="flex items-center gap-3 mt-2 min-h-[36px] flex-wrap">
+                        
                         {product.labelledPrice > product.price && (
-                            <div className="overflow-hidden">
-                                <p 
-                                    className={`inline-block text-sm text-red-500 line-through font-medium transition-all duration-500 ${
-                                        isHovered ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-70'
-                                    }`}
-                                    style={{ transitionDelay: '200ms' }}
-                                >
-                                    {getFormattedPrice(product.labelledPrice)}
-                                </p>
-                            </div>
-                        )}
-                        <div className="overflow-hidden">
                             <p 
-                                className={`inline-block text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent transition-all duration-500 ${
-                                    isHovered ? 'translate-y-0 opacity-100 scale-105' : 'translate-y-1 opacity-90 scale-100'
+                                className={`text-sm text-red-500 line-through font-medium transition-all duration-500 leading-relaxed whitespace-nowrap ${
+                                    isHovered ? 'translate-y-0 opacity-100' : 'translate-y-1 opacity-80'
                                 }`}
-                                style={{ transitionDelay: '250ms', transformOrigin: 'left center' }}
+                                style={{ transitionDelay: '200ms' }}
                             >
-                                {getFormattedPrice(product.price)}
+                                {getFormattedPrice(product.labelledPrice)}
                             </p>
-                        </div>
+                        )}
+
+                        <p 
+                            className={`text-2xl font-bold bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent transition-all duration-500 leading-relaxed whitespace-nowrap ${
+                                isHovered 
+                                    ? 'translate-y-0 opacity-100 scale-105' 
+                                    : 'translate-y-1 opacity-95 scale-100'
+                            }`}
+                            style={{ 
+                                transitionDelay: '250ms',
+                                transformOrigin: 'left center'
+                            }}
+                        >
+                            {getFormattedPrice(product.price)}
+                        </p>
                     </div>
 
-                    {/* View Details Button */}
+                    {/* View Details */}
                     <div 
                         className={`mt-4 transition-all duration-500 ${
-                            isHovered ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'
+                            isHovered ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0 w-0 h-0'
                         }`}
                         style={{ transitionDelay: '300ms' }}
                     >
-                        <div className="inline-flex items-center gap-2 text-sm font-semibold text-purple-600 group-hover:gap-3 transition-all duration-300">
+                        <div className="inline-flex items-center gap-2 text-sm font-semibold text-accent group-hover:gap-3 transition-all duration-300">
                             <span>View Details</span>
                             <svg 
                                 className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" 
@@ -171,13 +162,15 @@ export default function ProductCard(props) {
                     </div>
                 </div>
 
-                {/* Animated Particles */}
+                {/* Particles */}
                 <div className={`absolute top-20 right-20 w-2 h-2 rounded-full bg-white transition-all duration-700 ${
                     isHovered ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
                 }`} style={{ transitionDelay: '200ms' }} />
+
                 <div className={`absolute top-32 right-28 w-1.5 h-1.5 rounded-full bg-white transition-all duration-700 ${
                     isHovered ? 'scale-100 opacity-80' : 'scale-0 opacity-0'
                 }`} style={{ transitionDelay: '300ms' }} />
+
                 <div className={`absolute top-28 right-16 w-1 h-1 rounded-full bg-white transition-all duration-700 ${
                     isHovered ? 'scale-100 opacity-60' : 'scale-0 opacity-0'
                 }`} style={{ transitionDelay: '400ms' }} />
