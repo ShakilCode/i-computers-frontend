@@ -3,6 +3,7 @@ import {  getCartTotal } from "../utils/cart"
 import { BiMinus, BiPlus } from "react-icons/bi"
 import getFormattedPrice from "../utils/price-format"
 import { useLocation, useNavigate } from "react-router-dom";
+import CheckOutDetailsModal from "../components/checkoutDetailsModal";
 
 export default function Checkout(){
     const location = useLocation();
@@ -75,7 +76,7 @@ export default function Checkout(){
                     )
                 }
                 <div className="bg-white w-[600px] h-[100px] sticky bottom-0 rounded-xl shadow flex items-center">
-                    <button className="bg-accent text-white px-4 py-2 rounded ml-5 hover:bg-accent/80">Buy now</button>
+                    <CheckOutDetailsModal cart={cart} />
                     <span className="text-xl font-bold text-secondary absolute right-5 border-b-4  border-double">{getFormattedPrice(getCartTotal(cart))}</span>
                 </div>
             </div>            
