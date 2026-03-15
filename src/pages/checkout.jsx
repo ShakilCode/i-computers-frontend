@@ -1,5 +1,5 @@
 import { useState } from "react"
-import {  getCartTotal } from "../utils/cart"
+import { getCartTotal } from "../utils/cart"
 import { BiMinus, BiPlus } from "react-icons/bi"
 import getFormattedPrice from "../utils/price-format"
 import { useLocation, useNavigate } from "react-router-dom";

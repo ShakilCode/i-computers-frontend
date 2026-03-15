@@ -22,7 +22,7 @@ export default function LoginPage(){
 			if(response.data.role == "admin"){
 				navigate("/admin/")
 			}else{
-				// redirect to the home page
+				navigate("/")
 			}
 		}catch(err){
 			toast.error(err?.response?.data?.message || "Failed to login")
@@ -70,10 +70,10 @@ export default function LoginPage(){
 						</Link>
 					</p>
 					<button onClick={login} className="m-5 p-3 w-[90%] h-[50px] bg-accent rounded-lg text-white font-bold">
-						Login
+						Sign in
 					</button>
 					<button className="m-5 p-3 w-[90%] h-[50px] border border-accent rounded-lg text-white font-bold">
-						Login with Google
+						Sign in with Google
 					</button>
 					<p className="w-full text-right pr-6">
 						Don't have an account?{" "}

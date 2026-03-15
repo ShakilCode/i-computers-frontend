@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import getFormattedPrice from "../../utils/price-format";
 import axios from "axios";
-import { CiEdit, CiTrash } from "react-icons/ci";
+import { CiEdit } from "react-icons/ci";
 import LoadingAnimation from "../../components/loadingAnimation";
 import DeleteModal from "../../components/deleteModal";
 

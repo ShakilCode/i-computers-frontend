@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function CheckOutDetailsModal(props) {
 	const [isVisible, setIsVisible] = useState(false);
@@ -11,6 +12,33 @@ export default function CheckOutDetailsModal(props) {
 	const [city, setCity] = useState("");
 	const [postalCode, setPostalCode] = useState("");
 	const [phone, setPhone] = useState("");
+	const navigate = useNavigate();
+	useEffect(
+        ()=>{
+            const token = localStorage.getItem("token")
+            
+            if(token==null){
+                toast.error("Please login to continue checkout")
+                navigate("/login")
+            }
+            axios.get(import.meta.env.VITE_API_URL+"/users/profile" ,{
+                headers : {
+                    "Authorization" : `Bearer ${token}`
+                }
+            }).then(
+                (response)=>{
+                    console.log(response.data)
+					setFirstName(response.data.firstName)
+					setLastName(response.data.lastName)
+                }
+            ).catch(
+                    ()=>{
+                        localStorage.removeItem("token")
+                        window.location.href="/login"
+                    }
+                )
+        },[]
+    )
 
 	const cart = props.cart;
 
