@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios'
+import axios from "axios";
 import toast from "react-hot-toast";
 
-export default function LoginPage(){
-	const [email, setEmail] = useState("")
-	const [password, setPassword] = useState("")
+export default function LoginPage() {
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 	const navigate = useNavigate()
+
 
 	async function login(){
 		try{
@@ -18,32 +19,30 @@ export default function LoginPage(){
 			)
 			console.log(response)
 			toast.success("Login Successful")
-			localStorage.setItem("token", response.data.token)
-			if(response.data.role == "admin"){
+
+			localStorage.setItem("token" , response.data.token)
+			
+			if(response.data.role == "admin"){				
 				navigate("/admin/")
 			}else{
 				navigate("/")
 			}
 		}catch(err){
-			toast.error(err?.response?.data?.message || "Failed to login")
+			toast.error(err?.response?.data?.message || "Failed to login");
 		}
 	}
 
-    return(
-        <div className="w-full h-full bg-[url('login-bg.png')] bg-cover bg-center bg-no-repeat flex">
-
-            <div className="pb-60 w-[50%] h-full flex justify-center items-center flex-col">
-
-                <div className="border-4 border-secondary ml-125 mt-25 ml-8 bg-ac pb-1 backdrop-blur-md  w-[250px] h-[250px] shadow-accent rounded-full shadow-2xl flex flex-col justify-center items-center">
-                    <img src="/logo.png" className="w-[200px]"/>
-                </div>
-
-            </div>
-
-            <div className="w-[50%] h-full flex justify-center items-center">
-
-                <div className="backdrop-blur-xl w-[450px] h-[600px] shadow-2xl rounded-lg flex flex-col justify-center">
-                    <input
+	return (
+		<div className="w-full h-full bg-[url('/background.jpg')] bg-cover no-repeat bg-center flex">
+			<div className="w-[50%]  h-full hidden lg:flex justify-center items-center flex-col">
+				<img src="/logo.png" className="w-[300px]" />
+				<h1 className="text-4xl font-bold mt-5 text-white">I Computers</h1>
+			</div>
+			<div className="w-full lg:w-[50%] h-full  flex justify-center items-center">
+				<div className="backdrop-blur-3xl w-[450px] h-[600px] shadow-2xl rounded-lg flex flex-col justify-center">
+					<img src="/logo.png" className="w-[100px] mx-auto lg:hidden" />
+					<h1 className="lg:hidden text-3xl font-semibold mt-5 text-white text-center">I Computers</h1>
+					<input
 						type="email"
 						placeholder="Email"
 						onChange={
@@ -51,39 +50,38 @@ export default function LoginPage(){
 								setEmail(e.target.value)
 							}
 						}
-						className="m-5 p-3 w-[90%] h-[50px] rounded-lg border border-secondary outline-none"
+						className="m-5 p-3 w-[90%] h-[50px] rounded-lg border border-secondary outline-none "
 					/>
-                    <input
+					<input
 						type="password"
 						placeholder="Password"
+						className="m-5 p-3 w-[90%] h-[50px] rounded-lg border border-secondary outline-none"
 						onChange={
 							(e)=>{
 								setPassword(e.target.value)
 							}
 						}
-						className="m-5 p-3 w-[90%] h-[50px] rounded-lg border border-secondary outline-none"
 					/>
-					<p className="w-full text-right pr-6 ">
+					<p className="w-full text-right pr-5 ">
 						Forgot Password?{" "}
 						<Link to="/forgot-password" className="text-accent">
 							Reset
 						</Link>
 					</p>
 					<button onClick={login} className="m-5 p-3 w-[90%] h-[50px] bg-accent rounded-lg text-white font-bold">
-						Sign in
+						Login
 					</button>
-					<button className="m-5 p-3 w-[90%] h-[50px] border border-accent rounded-lg text-white font-bold">
-						Sign in with Google
+					<button  className="m-5 p-3 w-[90%] h-[50px] border border-accent rounded-lg text-white font-bold">
+						Login with Google
 					</button>
-					<p className="w-full text-right pr-6">
+					<p className="w-full  text-right pr-5">
 						Don't have an account?{" "}
 						<Link to="/register" className="text-accent">
-							Register
+							Sign up
 						</Link>
 					</p>
-                </div>
-
-            </div>
-        </div>
-    )
+				</div>
+			</div>
+		</div>
+	);
 }

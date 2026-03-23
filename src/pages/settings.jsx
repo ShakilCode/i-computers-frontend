@@ -88,7 +88,7 @@ export default function SettingsPage() {
 
 	return (
 		<div className="w-full min-h-[calc(100vh-100px)] flex justify-center items-center px-4 py-8">
-			<div className="w-full  flex flex-row gap-6 justify-center ">
+			<div className="w-full  flex flex-col lg:flex-row gap-6 justify-center ">
 				<div className="min-w-[300px] rounded-lg bg-white shadow-md p-6 flex flex-col gap-4">
 					<h1 className="text-2xl font-bold text-accent text-center">
 						Account Settings

@@ -9,7 +9,7 @@ export default function ProductPage(){
     const [products,setProducts] = useState([])
     const [loading,setLoading] = useState(true)
 
-        useEffect(
+    useEffect(
         ()=>{
 
             if(loading){
@@ -30,8 +30,10 @@ export default function ProductPage(){
         },[loading]
     )
 
+
+
     return(
-        <div className="flex justify-center items-center flex-wrap">
+        <div className="flex justify-center flex-wrap bg-primary ">
             {
                 loading && <LoadingAnimation/>
             }
@@ -41,7 +43,7 @@ export default function ProductPage(){
                         return(
                             <ProductCard product={item} key={item.productId}/>
                         )
-                   }
+                    }
                 )
             }
         </div>

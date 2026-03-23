@@ -38,12 +38,13 @@ export default function RegisterPage() {
 
 	return (
 		<div className="w-full h-full bg-[url('/background.jpg')] bg-cover no-repeat bg-center flex">
-			<div className="w-[50%] h-full flex justify-center items-center flex-col">
+			<div className="w-[50%] h-full hidden lg:flex justify-center items-center flex-col">
 				<img src="/logo.png" className="w-[300px]" />
-				<h1 className="text-4xl font-bold mt-5 text-white">Isuri Computers</h1>
+				<h1 className="text-4xl font-bold mt-5 text-white">I Computers</h1>
 			</div>
-			<div className="w-[50%] h-full  flex justify-center items-center">
-				<div className="backdrop-blur-3xl w-[450px] h-[600px] shadow-2xl rounded-lg flex flex-col justify-center">
+			<div className="w-full lg:w-[50%] h-full  flex justify-center items-center">
+				<div className="backdrop-blur-3xl w-[450px] h-[700px] shadow-2xl rounded-lg flex flex-col justify-center">
+					<h1 className="text-3xl p-5 mt-5 text-white text-center">I Computers</h1>
                     <div className="w-full h-[50px] flex items-center justify-between px-5">
                         <input
                             value={firstName}
@@ -103,7 +104,7 @@ export default function RegisterPage() {
 					</button>
 					<p className="w-full  text-right pr-5">
 						Already have an account?{" "}
-						<Link to="/login" className="text-accent">
+						<Link to="/register" className="text-accent">
 							Login
 						</Link>
 					</p>
