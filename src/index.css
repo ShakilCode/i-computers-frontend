@@ -18,3 +18,9 @@
     border-radius: 20px;       /* roundness of the scroll thumb */
     border: 3px solid transparent;  /* creates padding around scroll thumb */
 }
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

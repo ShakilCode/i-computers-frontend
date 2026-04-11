@@ -6,12 +6,13 @@ import Cart from "./cart";
 import Checkout from "./checkout";
 import MyOrdersPage from "./myOrdersPage";
 import SettingsPage from "./settings"
+import LandingPage from "./landingPage";
 export default function HomePage(){
     return(
         <div className="w-full h-screen overflow-y-scroll ">
             <Header/>
             <Routes>
-                <Route path="/" element={<div>Home Page Content</div>} />
+                <Route path="/" element={<LandingPage/> }/>
                 <Route path="/about" element={<div>About Page Content</div>} />
                 <Route path="/contact" element={<div>Contact Page Content</div>} />
                 {/* products */}
