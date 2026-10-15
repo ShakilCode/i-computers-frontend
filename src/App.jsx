@@ -6,6 +6,7 @@ import Test from "./components/test";
 import { Toaster } from "react-hot-toast";
 import RegisterPage from "./pages/register";
 import ForgetPassword from "./pages/forgetPassword";
+import ContactUsPage from "./pages/ContactUsPage";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgetPassword />} />
+        <Route path="/contact-us" element={<ContactUsPage />} />
          <Route path="/test" element={<Test />} />
       </Routes>
     </div>
