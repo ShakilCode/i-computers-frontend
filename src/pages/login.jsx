@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -7,6 +7,8 @@ import { useGoogleLogin } from "@react-oauth/google";
 export default function LoginPage() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [showPassword, setShowPassword] = useState(false); // UI only
+	const glowRef = useRef(null); // UI only (cursor glow)
 	const navigate = useNavigate()
 	const googleLogin = useGoogleLogin(
 		{
@@ -56,54 +58,208 @@ export default function LoginPage() {
 		}
 	}
 
+	// UI only: soft glow that follows the cursor
+	function moveGlow(e){
+		if(glowRef.current){
+			glowRef.current.style.transform = `translate(${e.clientX - 200}px, ${e.clientY - 200}px)`
+		}
+	}
+
+	const words = ["laptop", "graphics card", "monitor", "keyboard"];
+
+	const inputClass =
+		"peer w-full h-14 rounded-2xl bg-white/70 border border-secondary/10 px-5 pt-5 pb-1 text-secondary outline-none placeholder-transparent transition focus:border-accent focus:bg-white focus:ring-4 focus:ring-accent/15";
+	const labelClass =
+		"pointer-events-none absolute left-5 top-1.5 text-xs text-secondary/50 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-accent";
+
 	return (
-		<div className="w-full h-full bg-[url('/background.jpg')] bg-cover no-repeat bg-center flex">
-			<div className="w-[50%]  h-full hidden lg:flex justify-center items-center flex-col">
-				<img src="/logo.png" className="w-[300px]" />
-				<h1 className="text-4xl font-bold mt-5 text-white">I Computers</h1>
+		<div
+			onMouseMove={moveGlow}
+			className="relative w-full min-h-screen overflow-hidden bg-primary flex"
+		>
+			{/* Aurora background */}
+			<div className="pointer-events-none absolute -top-40 -left-40 w-[560px] h-[560px] rounded-full bg-accent/35 blur-3xl animate-blob" />
+			<div className="pointer-events-none absolute top-1/4 -right-48 w-[520px] h-[520px] rounded-full bg-accent-2/30 blur-3xl animate-blob [animation-delay:-7s]" />
+			<div className="pointer-events-none absolute -bottom-48 left-1/3 w-[500px] h-[500px] rounded-full bg-[#ff8fd8]/25 blur-3xl animate-blob [animation-delay:-14s]" />
+
+			{/* Subtle dot grid */}
+			<div
+				className="pointer-events-none absolute inset-0 opacity-[0.35]"
+				style={{
+					backgroundImage: "radial-gradient(rgba(31,27,58,0.12) 1px, transparent 1px)",
+					backgroundSize: "28px 28px",
+					maskImage: "radial-gradient(ellipse at center, black 30%, transparent 75%)",
+					WebkitMaskImage: "radial-gradient(ellipse at center, black 30%, transparent 75%)",
+				}}
+			/>
+
+			{/* Cursor glow */}
+			<div
+				ref={glowRef}
+				className="pointer-events-none fixed top-0 left-0 w-[400px] h-[400px] rounded-full bg-accent/20 blur-3xl transition-transform duration-300 ease-out hidden lg:block"
+			/>
+
+			{/* Left: headline side */}
+			<div className="relative w-1/2 hidden lg:flex justify-center items-center">
+				<div className="relative max-w-[520px] px-10">
+					<span
+						className="inline-flex items-center gap-2 rounded-full bg-white/70 backdrop-blur-md border border-white px-4 py-1.5 text-sm font-medium text-secondary shadow-lg shadow-accent/10 animate-rise"
+					>
+						<span className="relative flex w-2.5 h-2.5">
+							<span className="absolute inline-flex w-full h-full rounded-full bg-accent-2 opacity-75 animate-ping" />
+							<span className="relative inline-flex w-2.5 h-2.5 rounded-full bg-accent-2" />
+						</span>
+						I Computers
+					</span>
+
+					<h1 className="mt-6 text-6xl font-bold leading-[1.1] tracking-tight text-secondary animate-rise" style={{ animationDelay: "0.1s" }}>
+						Find your next
+						<span className="block h-[1.2em] overflow-hidden">
+							<span className="flex flex-col animate-words">
+								{[...words, words[0]].map((w, i) => (
+									<span
+										key={i}
+										className="h-[1.2em] bg-linear-to-r from-accent via-[#b06cff] to-accent-2 bg-clip-text text-transparent animate-gradient [background-size:200%_100%]"
+									>
+										{w}
+									</span>
+								))}
+							</span>
+						</span>
+					</h1>
+
+					<p className="mt-5 text-lg text-secondary/60 animate-rise" style={{ animationDelay: "0.2s" }}>
+						Log in to track orders, save your wishlist and check out faster.
+					</p>
+
+					{/* Floating glass cards */}
+					<div className="relative mt-12 h-[230px]">
+						<div className="absolute left-0 top-0 animate-float" style={{ animationDelay: "0s" }}>
+							<div className="rounded-2xl bg-white/70 backdrop-blur-xl border border-white px-5 py-4 shadow-xl shadow-accent/10">
+								<p className="text-xs text-secondary/50">Availability</p>
+								<p className="mt-1 font-semibold text-secondary flex items-center gap-2">
+									<span className="w-2 h-2 rounded-full bg-accent-2 animate-pulse-soft" />
+									In stock today
+								</p>
+							</div>
+						</div>
+						<div className="absolute left-[170px] top-12 animate-float-slow" style={{ animationDelay: "1s" }}>
+							<div className="rounded-2xl bg-white/70 backdrop-blur-xl border border-white px-5 py-4 shadow-xl shadow-accent/10">
+								<p className="text-xs text-secondary/50">Delivery</p>
+								<p className="mt-1 font-semibold text-secondary">Fast and tracked</p>
+							</div>
+						</div>
+						<div className="absolute left-[40px] top-[150px] animate-float" style={{ animationDelay: "2s" }}>
+							<div className="rounded-2xl bg-accent text-white px-5 py-3 shadow-xl shadow-accent/30 font-medium">
+								Warranty on every item
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div className="w-full lg:w-[50%] h-full  flex justify-center items-center">
-				<div className="backdrop-blur-3xl w-[450px] h-[600px] shadow-2xl rounded-lg flex flex-col justify-center">
-					<img src="/logo.png" className="w-[100px] mx-auto lg:hidden" />
-					<h1 className="lg:hidden text-3xl font-semibold mt-5 text-white text-center">I Computers</h1>
-					<input
-						type="email"
-						placeholder="Email"
-						onChange={
-							(e)=>{
-								setEmail(e.target.value)
-							}
-						}
-						className="m-5 p-3 w-[90%] h-[50px] rounded-lg border border-secondary outline-none "
-					/>
-					<input
-						type="password"
-						placeholder="Password"
-						className="m-5 p-3 w-[90%] h-[50px] rounded-lg border border-secondary outline-none"
-						onChange={
-							(e)=>{
-								setPassword(e.target.value)
-							}
-						}
-					/>
-					<p className="w-full text-right pr-5 ">
-						Forgot Password?{" "}
-						<Link to="/forgot-password" className="text-accent">
-							Reset
-						</Link>
-					</p>
-					<button onClick={login} className="m-5 p-3 w-[90%] h-[50px] bg-accent rounded-lg text-white font-bold">
-						Login
-					</button>
-					<button onClick={googleLogin} className="m-5 p-3 w-[90%] h-[50px] border border-accent rounded-lg text-white font-bold">
-						Login with Google
-					</button>
-					<p className="w-full  text-right pr-5">
-						Don't have an account?{" "}
-						<Link to="/register" className="text-accent">
-							Sign up
-						</Link>
-					</p>
+
+			{/* Right: form side */}
+			<div className="relative w-full lg:w-1/2 min-h-screen flex justify-center items-center p-5">
+				{/* Animated gradient border */}
+				<div className="relative w-full max-w-[460px] rounded-[2rem] p-[2px] overflow-hidden shadow-2xl shadow-accent/20 animate-rise">
+					<div className="absolute -inset-[60%] bg-[conic-gradient(from_0deg,transparent_0deg,var(--color-accent)_90deg,var(--color-accent-2)_180deg,transparent_270deg)] animate-spin-slow" />
+
+					<div className="relative rounded-[calc(2rem-2px)] bg-white/85 backdrop-blur-2xl p-8 sm:p-10 flex flex-col">
+						<div className="animate-rise" style={{ animationDelay: "0.1s" }}>
+							<h2 className="text-3xl font-bold text-secondary tracking-tight">Welcome back</h2>
+							<p className="mt-1 text-secondary/60">Log in to continue shopping.</p>
+						</div>
+
+						<div className="relative mt-8 animate-rise" style={{ animationDelay: "0.2s" }}>
+							<input
+								id="email"
+								type="email"
+								placeholder=" "
+								onChange={
+									(e)=>{
+										setEmail(e.target.value)
+									}
+								}
+								className={inputClass}
+							/>
+							<label htmlFor="email" className={labelClass}>Email</label>
+						</div>
+
+						<div className="relative mt-4 animate-rise" style={{ animationDelay: "0.3s" }}>
+							<input
+								id="password"
+								type={showPassword ? "text" : "password"}
+								placeholder=" "
+								className={inputClass + " pr-14"}
+								onChange={
+									(e)=>{
+										setPassword(e.target.value)
+									}
+								}
+							/>
+							<label htmlFor="password" className={labelClass}>Password</label>
+							<button
+								type="button"
+								onClick={() => setShowPassword(!showPassword)}
+								aria-label={showPassword ? "Hide password" : "Show password"}
+								className="absolute right-4 top-1/2 -translate-y-1/2 text-secondary/50 hover:text-accent transition"
+							>
+								{showPassword ? (
+									<svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+										<path strokeLinecap="round" strokeLinejoin="round" d="M3 3l18 18M10.6 10.6a2 2 0 002.8 2.8M9.9 5.1A9.8 9.8 0 0112 5c5 0 9 4 10 7a11 11 0 01-3.2 4.5M6.1 6.1C4 7.6 2.6 9.8 2 12c1 3 5 7 10 7 1.5 0 2.9-.3 4.1-.9" />
+									</svg>
+								) : (
+									<svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+										<path strokeLinecap="round" strokeLinejoin="round" d="M2 12c1-3 5-7 10-7s9 4 10 7c-1 3-5 7-10 7S3 15 2 12z" />
+										<circle cx="12" cy="12" r="3" />
+									</svg>
+								)}
+							</button>
+						</div>
+
+						<p className="w-full text-right mt-3 text-sm text-secondary/60 animate-rise" style={{ animationDelay: "0.35s" }}>
+							Forgot password?{" "}
+							<Link to="/forgot-password" className="text-accent font-medium hover:underline">
+								Reset
+							</Link>
+						</p>
+
+						<button
+							onClick={login}
+							className="group relative mt-6 w-full h-14 rounded-full bg-linear-to-r from-accent via-[#8b7cf6] to-accent [background-size:200%_100%] animate-gradient text-white font-semibold overflow-hidden shadow-lg shadow-accent/30 transition hover:shadow-xl hover:shadow-accent/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/30 animate-rise"
+							style={{ animationDelay: "0.4s" }}
+						>
+							<span className="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+							<span className="relative">Login</span>
+						</button>
+
+						<div className="flex items-center gap-3 my-5 text-xs text-secondary/40 animate-rise" style={{ animationDelay: "0.45s" }}>
+							<span className="flex-1 h-px bg-secondary/10" />
+							or
+							<span className="flex-1 h-px bg-secondary/10" />
+						</div>
+
+						<button
+							onClick={googleLogin}
+							className="w-full h-14 rounded-full bg-white border border-secondary/10 text-secondary font-semibold flex items-center justify-center gap-3 transition hover:border-accent hover:shadow-lg hover:shadow-accent/10 hover:-translate-y-0.5 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent/20 animate-rise"
+							style={{ animationDelay: "0.5s" }}
+						>
+							<svg className="w-5 h-5" viewBox="0 0 48 48">
+								<path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z" />
+								<path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z" />
+								<path fill="#FBBC05" d="M10.5 28.7a14.5 14.5 0 010-9.4l-7.9-6.1a24 24 0 000 21.6l7.9-6.1z" />
+								<path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.8 2.3-8.4 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z" />
+							</svg>
+							Continue with Google
+						</button>
+
+						<p className="w-full text-center mt-6 text-sm text-secondary/60 animate-rise" style={{ animationDelay: "0.55s" }}>
+							Don't have an account?{" "}
+							<Link to="/register" className="text-accent font-semibold hover:underline">
+								Sign up
+							</Link>
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
