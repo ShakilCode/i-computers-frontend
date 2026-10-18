@@ -66,7 +66,6 @@ export default function AboutPage() {
 		{ title: "Genuine products", desc: "We only sell items from trusted suppliers, so what you order is exactly what you get.", icon: <BiShieldQuarter size={26} />, span: "lg:col-span-2" },
 		{ title: "Honest pricing", desc: "Clear prices and real discounts, shown on every product.", icon: <BiBadgeCheck size={26} />, span: "" },
 		{ title: "Friendly support", desc: "Real people who help you pick the right device.", icon: <BiSupport size={26} />, span: "" },
-		{ title: "Reliable delivery", desc: "Careful packing and tracked shipping from our shop to your door.", icon: <BiPackage size={26} />, span: "lg:col-span-2" },
 	];
 
 	const steps = [
@@ -133,7 +132,7 @@ export default function AboutPage() {
 								</div>
 							</div>
 						))}
-						<div className="absolute bottom-0 right-0 animate-float-slow" style={{ animationDelay: "1.2s" }}>
+						<div className="absolute bottom-[-50px] right-0 animate-float-slow" style={{ animationDelay: "1.2s" }}>
 							<div className="rounded-full bg-accent text-white px-5 py-3 font-medium shadow-xl shadow-accent/30">Genuine warranty</div>
 						</div>
 					</div>
