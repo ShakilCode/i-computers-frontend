@@ -8,6 +8,7 @@ import RegisterPage from "./pages/register";
 import ForgetPassword from "./pages/forgetPassword";
 import ContactUsPage from "./pages/ContactUsPage";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import AdminRoute from "./components/adminRoute";
 
 
 export default function App() {
@@ -18,7 +19,11 @@ export default function App() {
       <Toaster position="top-right"/>
       <Routes>
         <Route path="/*" element={<HomePage />} />
-        <Route path="/admin/*" element={<AdminPage />} />
+
+        <Route element={<AdminRoute />}>
+          <Route path="/admin/*" element={<AdminPage />} />
+        </Route>
+        
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgot-password" element={<ForgetPassword />} />

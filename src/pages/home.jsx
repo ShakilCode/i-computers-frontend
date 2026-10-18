@@ -9,6 +9,7 @@ import SettingsPage from "./settings"
 import LandingPage from "./landingPage";
 import ContactUsPage from "./ContactUsPage";
 import AboutPage from "./aboutPage";
+import NotFoundPage from "./notFoundPage";
 export default function HomePage(){
     return(
         <div className="w-full h-screen overflow-y-scroll ">
@@ -24,7 +25,7 @@ export default function HomePage(){
                 <Route path="/checkout" element={<Checkout/>} />
                 <Route path="/my-orders" element={<MyOrdersPage/>} />
                 <Route path="/settings" element={<SettingsPage/>}/>
-                <Route path="/*" element={<div>404 Not Found</div>} />
+                <Route path="/*" element={<NotFoundPage />} />
             </Routes>
         </div>
     )
